@@ -14,4 +14,13 @@ Dto.PIM.Dto()
 |> PIM.calculatePIM3
 
 
+Dto.PIM.Dto()
+|> fun dto ->
+    dto.Ventilated <- true
+    dto.ByPass <- true
+    dto
+|> Dto.PIM.fromDto
+|> PIM.calculatePIM2
+|> PIM.calculatePIM3
+
 
