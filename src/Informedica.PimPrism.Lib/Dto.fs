@@ -49,14 +49,16 @@ module Dto =
 
 
         type Dto () =
-            member val Urgency = false  with get, set
+            member val Elective = false  with get, set
+            member val ElectiveUnknown = true  with get, set
             member val Recovery = false with get, set
             member val ByPass = false with get, set
             member val Cardiac = false with get, set
             member val RiskDiagnosis : string list = [] with get, set
             member val Ventilated = false with get, set
             member val AdmissionPupils = false with get, set
-            member val PaO2 : float option = None with get, set
+            member val PaO2kP : float option = None with get, set
+            member val PaO2mmHg : float option = None with get, set
             member val FiO2 : float option = None with get, set
             member val BaseExcess : float option = None with get, set
             member val SystolicBloodPressure : float option = None with get, set
@@ -70,12 +72,14 @@ module Dto =
         let fromDto (dto: Dto) =
             {
                 Urgency = 
-                    if dto.Urgency = false then UnknownUrgency
-                    else NotElective
+                    match dto.Elective, dto.ElectiveUnknown with
+                    | true,  _     -> Elective
+                    | false, true  -> UnknownUrgency
+                    | false, false -> NotElective
                 Recovery =  
                     match dto.Recovery, dto.ByPass, dto.Cardiac with
                     | _, true, _         -> PostCardiacByPass
-                    | true, false, true  -> PostCardiacNonByPass
+                    | _, false, true     -> PostCardiacNonByPass
                     | true, false, false -> PostNonCardiacProcedure
                     | false, false, _    -> NoRecovery
                 RiskDiagnosis  =  dto.RiskDiagnosis |> List.collect diagnosesFromString
@@ -83,7 +87,10 @@ module Dto =
                 AdmissionPupils  =  
                     if dto.AdmissionPupils = true then PIM.FixedDilated 
                     else PIM.UnknownPupils
-                PaO2  =  dto.PaO2
+                PaO2  =  
+                    match dto.PaO2kP, dto.PaO2mmHg with
+                    | Some _, _ -> dto.PaO2kP
+                    | None, _   -> dto.PaO2mmHg |> Option.map calcmmHgToKiloPascal
                 FiO2  =  dto.FiO2
                 BaseExcess  =  dto.BaseExcess
                 SystolicBloodPressure  =  dto.SystolicBloodPressure

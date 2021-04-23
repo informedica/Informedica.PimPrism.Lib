@@ -239,7 +239,7 @@ module PIM =
 
         let scoreList =
             [
-                "urgency"
+                "elective"
                 , if pim.Urgency = Elective then -0.5378 else 0.
 
                 "recovery"
