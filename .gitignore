@@ -1,0 +1,38 @@
+# Ignore all files using an opt-inn approach
+*
+
+# Add .gitignore and .gitattributes
+!.gitignore
+!.gitattributes
+
+# Add dotnet tool config
+!/.config/
+!/.config/*.json
+
+# Add dependencies file
+!paket.dependencies
+!paket.lock
+!paket.references
+!paket.template
+
+# Add license
+!LICENSE.txt
+!LICENSE
+
+# Add todo list
+!ToDo.txt
+
+# Add md files
+!*.md
+
+# Add fsx and fs files
+!*.fsx
+!*.fs
+
+# Add sln file
+!*.sln
+
+# Add source files
+!/src/
+!/src/Informedica.PimPrism.Lib/
+!/src/Informedica.PimPrism.Lib/scripts/
