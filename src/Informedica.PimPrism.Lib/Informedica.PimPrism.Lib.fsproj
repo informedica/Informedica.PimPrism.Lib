@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Utils.fs" />
+    <Compile Include="Types.fs" />
+    <Compile Include="Pim.fs" />
+    <Compile Include="Prism.fs" />
+    <Compile Include="Dto.fs" />
+  </ItemGroup>
+</Project>

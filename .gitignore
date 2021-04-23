@@ -25,7 +25,8 @@
 # Add md files
 !*.md
 
-# Add fsx and fs files
+# Add project fsx and fs files
+!*.*proj
 !*.fsx
 !*.fs
 
