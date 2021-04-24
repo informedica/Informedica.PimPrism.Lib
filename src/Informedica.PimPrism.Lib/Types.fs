@@ -65,8 +65,10 @@ module Types =
             CPR24HourBefore : bool
             Cancer : bool
             LowRiskPrimary : bool
+            PRISM3ScoreList : (string * int) list
             PRISM3Score : int option
             PRISM3Neuro : int option
+            PRISM4ScoreList : (string * float) list
             PRISM4Mortality : float option
         }
 

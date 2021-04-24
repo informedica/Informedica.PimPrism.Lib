@@ -4,7 +4,8 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="/scripts/PIM.fsx" />
+    <None Include="scripts\PIM.fsx" />
+    <None Include="scripts\PRISM.fsx" />
     <Compile Include="Utils.fs" />
     <Compile Include="Types.fs" />
     <Compile Include="Pim.fs" />

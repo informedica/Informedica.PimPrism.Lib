@@ -131,9 +131,16 @@ module PIM =
             |> fun x -> x * 100.
 
         let recovScore = function
-            | NoRecovery        -> 0.
-            | PostCardiacByPass -> 0.7507
-            | _                 -> -1.0244
+            | PostCardiacByPass
+            | PostNonCardiacProcedure 
+            | PostCardiacNonByPass    -> -1.0244
+            | NoRecovery              -> 0.
+
+        let byPassScore = function
+            | PostCardiacByPass       -> 0.7507
+            | NoRecovery
+            | PostNonCardiacProcedure 
+            | PostCardiacNonByPass    -> 0.
 
         let scoreList =
             [
@@ -142,6 +149,9 @@ module PIM =
 
                 "recovery",
                 pim.Recovery |> recovScore
+
+                "bypass",
+                pim.Recovery |> byPassScore
 
                 "low risk diagnosis",
                 // lowRisc

@@ -40,8 +40,10 @@ module PRISM =
             CPR24HourBefore : bool
             Cancer : bool
             LowRiskPrimary : bool
+            PRISM3ScoreList : (string * int) list
             PRISM3Score : int option
             PRISM3Neuro : int option
+            PRISM4ScoreList : (string * float) list
             PRISM4Mortality : float option
         }
 
@@ -88,15 +90,15 @@ module PRISM =
             { Item = BloodPressure; AgeType = Child;         LowPoints = 7; MidPoints = 3; HighPoints = 0;  LowRange = 55.;  MidRangeLow = Some 55.;  MidRangeHigh = Some 75.;  HighRange = 75. }
             { Item = BloodPressure; AgeType = Adolescent;    LowPoints = 7; MidPoints = 3; HighPoints = 0;  LowRange = 65.;  MidRangeLow = Some 65.;  MidRangeHigh = Some 85.;  HighRange = 85. }
             // temparature
-            { Item = Temperature;   AgeType = Neonate;       LowPoints = 3; MidPoints = 0; HighPoints = 3;  LowRange = 33.;  MidRangeLow = Some 33.;  MidRangeHigh = Some 40.;  HighRange = 40. }
-            { Item = Temperature;   AgeType = Infant;        LowPoints = 3; MidPoints = 0; HighPoints = 3;  LowRange = 33.;  MidRangeLow = Some 33.;  MidRangeHigh = Some 40.;  HighRange = 40. }
-            { Item = Temperature;   AgeType = Child;         LowPoints = 3; MidPoints = 0; HighPoints = 3;  LowRange = 33.;  MidRangeLow = Some 33.;  MidRangeHigh = Some 40.;  HighRange = 40. }
-            { Item = Temperature;   AgeType = Adolescent;    LowPoints = 3; MidPoints = 0; HighPoints = 3;  LowRange = 33.;  MidRangeLow = Some 33.;  MidRangeHigh = Some 40.;  HighRange = 40. }
+            { Item = Temperature;   AgeType = AnyAge;        LowPoints = 3; MidPoints = 0; HighPoints = 3;  LowRange = 33.;  MidRangeLow = Some 33.;  MidRangeHigh = Some 40.;  HighRange = 40. }
+            // { Item = Temperature;   AgeType = Infant;        LowPoints = 3; MidPoints = 0; HighPoints = 3;  LowRange = 33.;  MidRangeLow = Some 33.;  MidRangeHigh = Some 40.;  HighRange = 40. }
+            // { Item = Temperature;   AgeType = Child;         LowPoints = 3; MidPoints = 0; HighPoints = 3;  LowRange = 33.;  MidRangeLow = Some 33.;  MidRangeHigh = Some 40.;  HighRange = 40. }
+            // { Item = Temperature;   AgeType = Adolescent;    LowPoints = 3; MidPoints = 0; HighPoints = 3;  LowRange = 33.;  MidRangeLow = Some 33.;  MidRangeHigh = Some 40.;  HighRange = 40. }
             // mental status
-            { Item = MentalStatus;  AgeType = Neonate;       LowPoints = 0; MidPoints = 5; HighPoints = 0;  LowRange = 1.;   MidRangeLow = None;      MidRangeHigh = None;      HighRange = 7. }
-            { Item = MentalStatus;  AgeType = Infant;        LowPoints = 0; MidPoints = 5; HighPoints = 0;  LowRange = 1.;   MidRangeLow = None;      MidRangeHigh = None;      HighRange = 7. }
-            { Item = MentalStatus;  AgeType = Child;         LowPoints = 0; MidPoints = 5; HighPoints = 0;  LowRange = 1.;   MidRangeLow = None;      MidRangeHigh = None;      HighRange = 7. }
-            { Item = MentalStatus;  AgeType = Adolescent;    LowPoints = 0; MidPoints = 5; HighPoints = 0;  LowRange = 1.;   MidRangeLow = None;      MidRangeHigh = None;      HighRange = 7. }
+            { Item = MentalStatus;  AgeType = AnyAge;        LowPoints = 0; MidPoints = 5; HighPoints = 0;  LowRange = 3.;   MidRangeLow = None;      MidRangeHigh = None;      HighRange = 7. }
+            // { Item = MentalStatus;  AgeType = Infant;        LowPoints = 0; MidPoints = 5; HighPoints = 0;  LowRange = 3.;   MidRangeLow = None;      MidRangeHigh = None;      HighRange = 7. }
+            // { Item = MentalStatus;  AgeType = Child;         LowPoints = 0; MidPoints = 5; HighPoints = 0;  LowRange = 3.;   MidRangeLow = None;      MidRangeHigh = None;      HighRange = 7. }
+            // { Item = MentalStatus;  AgeType = Adolescent;    LowPoints = 0; MidPoints = 5; HighPoints = 0;  LowRange = 3.;   MidRangeLow = None;      MidRangeHigh = None;      HighRange = 7. }
             // heart rate
             { Item = HeartRate;     AgeType = Neonate;       LowPoints = 0; MidPoints = 3; HighPoints = 4;  LowRange = 215.; MidRangeLow = Some 215.; MidRangeHigh = Some 225.; HighRange = 225. }
             { Item = HeartRate;     AgeType = Infant;        LowPoints = 0; MidPoints = 3; HighPoints = 4;  LowRange = 215.; MidRangeLow = Some 215.; MidRangeHigh = Some 225.; HighRange = 225. }
@@ -111,8 +113,8 @@ module PRISM =
             { Item = Urea;          AgeType = Neonate;       LowPoints = 0; MidPoints = 0; HighPoints = 3;  LowRange = 0.;   MidRangeLow = Some 0.;   MidRangeHigh = Some 0.;   HighRange = 4.3 }
             { Item = Urea;          AgeType = AllMinNeonate; LowPoints = 0; MidPoints = 0; HighPoints = 3;  LowRange = 0.;   MidRangeLow = Some 0.;   MidRangeHigh = Some 0.;   HighRange = 5.4 }
             // prothPT
-            { Item = ProthPT;       AgeType = Neonate;       LowPoints = 0; MidPoints = 0; HighPoints = 3;  LowRange = 0.;   MidRangeLow = Some 0.;   MidRangeHigh = Some 0.;   HighRange = 22.0 }
-            { Item = ProthPT;       AgeType = AllMinNeonate; LowPoints = 0; MidPoints = 0; HighPoints = 3;  LowRange = 0.;   MidRangeLow = Some 0.;   MidRangeHigh = Some 0.;   HighRange = 22.0 }
+            { Item = ProthPT;       AgeType = AnyAge;        LowPoints = 0; MidPoints = 0; HighPoints = 3;  LowRange = 0.;   MidRangeLow = Some 0.;   MidRangeHigh = Some 0.;   HighRange = 22.0 }
+            // { Item = ProthPT;       AgeType = AllMinNeonate; LowPoints = 0; MidPoints = 0; HighPoints = 3;  LowRange = 0.;   MidRangeLow = Some 0.;   MidRangeHigh = Some 0.;   HighRange = 22.0 }
             // prothPTT.
             { Item = ProthPTT;      AgeType = Neonate;       LowPoints = 0; MidPoints = 0; HighPoints = 3;  LowRange = 0.;   MidRangeLow = Some 0.;   MidRangeHigh = Some 0.;   HighRange = 85.0 }
             { Item = ProthPTT;      AgeType = AllMinNeonate; LowPoints = 0; MidPoints = 0; HighPoints = 3;  LowRange = 0.;   MidRangeLow = Some 0.;   MidRangeHigh = Some 0.;   HighRange = 57.0 }
@@ -133,7 +135,7 @@ module PRISM =
             // wbc
             { Item = WBC;           AgeType = AnyAge;        LowPoints = 0; MidPoints = 0; HighPoints = 4; LowRange = 0.;    MidRangeLow = Some 0.;   MidRangeHigh = Some 0.;   HighRange = 3000. }
             // wbc
-            { Item = Platelets;     AgeType = AnyAge;        LowPoints = 2; MidPoints = 4; HighPoints = 5; LowRange = 50.;   MidRangeLow = Some 100.; MidRangeHigh = None;      HighRange = 200. }
+            { Item = Platelets;     AgeType = AnyAge;        LowPoints = 2; MidPoints = 4; HighPoints = 5; LowRange = 50.;   MidRangeLow = Some 100.; MidRangeHigh = Some 200.; HighRange = 200. }
         ]
 
     let prism = 
@@ -163,8 +165,10 @@ module PRISM =
             CPR24HourBefore = false
             Cancer = false
             LowRiskPrimary = false
+            PRISM3ScoreList = []
             PRISM3Score = None
             PRISM3Neuro = None
+            PRISM4ScoreList = []
             PRISM4Mortality = None
         }
 
@@ -192,8 +196,10 @@ module PRISM =
             CPR24HourBefore = false
             Cancer = false
             LowRiskPrimary = true
+            PRISM3ScoreList = []
             PRISM3Score = None
             PRISM3Neuro = None
+            PRISM4ScoreList = []
             PRISM4Mortality = None
         }
 
@@ -210,9 +216,9 @@ module PRISM =
     let mapPRISM4Age date a =
         let diff (a : DateTime) = (date - a).TotalDays |> int
         match a with
-        | a when a |> diff <= 14 -> TwoWeeks
-        | a when a |> diff <= 2 * 365 -> OneMonth
-        | a when a |> diff <= 12 * 365 -> OneYear
+        | a when a |> diff < 14 -> TwoWeeks
+        | a when a |> diff < 28 -> OneMonth
+        | a when a |> diff < 365 -> OneYear
         | _ -> EightTeen
 
 
@@ -464,46 +470,49 @@ module PRISM =
             "Acidosis", calculateAcidosisPh input.PH input.TotalCO2
             "Coagulation", calculateCoagulation (input.PT |> calc ProthPT) (input.PTT |> calc ProthPTT)
         ]
-        |> List.mapi (fun i (l, s) ->
-                s
-            )
-        |> List.fold (fun acc s ->
-            match acc with
+        |> List.fold (fun acc (l, s) ->
+            let score, scoreList = acc
+            match score with
             | Neuro n1, NonNeuro n2 ->
                 match s with
-                | Neuro n    -> Neuro (n + n1), NonNeuro n2
-                | NonNeuro n -> Neuro n1,       NonNeuro (n + n2)
+                | Neuro n    -> (Neuro (n + n1), NonNeuro n2)       , (l, n)::scoreList
+                | NonNeuro n -> (Neuro n1,       NonNeuro (n + n2)) , (l, n)::scoreList
             | _ ->
                 sprintf "invalid acc %A" acc
                 |> failwith
-        ) (Neuro 0, NonNeuro 0)
+        ) ((Neuro 0, NonNeuro 0), [])
 
 
     let calcProbability date input s =
         match input.Age with
         | None ->
             printfn "Cannot calculate probability without age for score: %A" s
-            None
+            None, []
         | Some a ->
             let a = a |> mapPRISM4Age date
             match s with
             | Neuro n1, NonNeuro n2 ->
-                [
-                    a |> ageMap
-                    input.AdmissionSource |> admissionMap
-                    if input.CPR24HourBefore then 1.082 else 0.
-                    if input.Cancer then 0.766 else 0.
-                    if input.LowRiskPrimary then -1.697 else 0.
-                    (n1 |> float) * 0.197
-                    (n2 |> float) * 0.163
-                    -5.776
-                ]
-                |> List.reduce (+)
+                let s, sl =
+                    [
+                        "age", a |> ageMap
+                        "admission", input.AdmissionSource |> admissionMap
+                        "CPR", if input.CPR24HourBefore then 1.082 else 0.
+                        "cancer", if input.Cancer then 0.766 else 0.
+                        "low risk", if input.LowRiskPrimary then -1.697 else 0.
+                        "neuro", (n1 |> float) * 0.197
+                        "nonneuro", (n2 |> float) * 0.163
+                        "baseline", -5.776
+                    ]
+                    |> fun sl ->
+                        (sl
+                        |> List.map snd
+                        |> List.sum) , sl
+                s 
                 |> calcRiskFromScore
-                |> Some
+                |> Some, sl
             | _ ->
                 printfn "not a valid score: %A" s
-                None
+                None, []
 
 
     let mapPRISMtoInput (prism: PRISM) : Input =
@@ -545,8 +554,10 @@ module PRISM =
 
     let mapInputToPRISM (prism: PRISM) (input : Input) : PRISM =
         { prism with
+            PRISM3ScoreList = input.PRISM3ScoreList
             PRISM3Neuro = input.PRISM3Neuro
             PRISM3Score = input.PRISM3Score
+            PRISM4ScoreList = input.PRISM4ScoreList
             PRISM4Mortality = input.PRISM4Mortality
         }
 
@@ -554,16 +565,22 @@ module PRISM =
         match input.Age with
         | None -> input
         | _ ->
-            let neuro, nonneuro =
+            let neuro, nonneuro, sl3 =
                 match input |> calcScore date with
-                | Neuro v1, NonNeuro v2 -> Some v1, Some v2
-                | _ -> None, None
+                | (Neuro v1, NonNeuro v2), sl -> Some v1, Some v2, sl
+                | _ -> None, None, []
+
+            let mort, sl4 =
+                input
+                |> calcScore date
+                |> fun ((neuro, nonneuro), _) -> (neuro, nonneuro)
+                |> calcProbability date input
+
 
             { input with
+                PRISM3ScoreList = sl3
                 PRISM3Neuro = neuro
                 PRISM3Score = nonneuro
-                PRISM4Mortality =
-                    input
-                    |> calcScore date
-                    |> calcProbability date input
+                PRISM4ScoreList = sl4
+                PRISM4Mortality = mort
             }

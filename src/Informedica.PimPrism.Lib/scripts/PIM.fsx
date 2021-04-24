@@ -108,9 +108,9 @@ Dto.PIM.Dto()
 
 
 // Case cardiac bypass
-// PIM2 factor = 0,7507
+// PIM2 factor = -1.0244 + 0,7507 
 // PIM3 factor = -1,2246
-// PIM2 mort = 1.6%
+// PIM2 mort = 0.6%
 // PIM3 mort = 0.4%
 Dto.PIM.Dto()
 |> fun dto ->
@@ -133,7 +133,7 @@ Dto.PIM.Dto()
 |> PIM.calculatePIM3
 
 
-// Case cardiac bypass
+// Case cardiac recovery
 // PIM2 factor = -1,0244
 // PIM3 factor = -1,5164
 // PIM2 mort = 0.3%
