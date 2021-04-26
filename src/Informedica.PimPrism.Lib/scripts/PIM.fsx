@@ -23,9 +23,6 @@ open Expecto.Logging.Message
 
 
 
-let logger = Log.create "FSI"
-
-
 let createTests case pim2 pim3 (f : PIM.Dto -> unit) =
 //    Console.WriteLine($"testing {case}")
     PIM.Dto()
