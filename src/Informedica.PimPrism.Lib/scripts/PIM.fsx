@@ -22,9 +22,7 @@ open Expecto.Logging.Message
 // PIM3: https://espnic-online.org/Education/Professional-Resources/Paediatric-Index-of-Mortality-3
 
 
-
-let createTests case pim2 pim3 (f : PIM.Dto -> unit) =
-//    Console.WriteLine($"testing {case}")
+let run (f : PIM.Dto -> unit)  =
     PIM.Dto()
     |> fun dto -> 
         dto |> f
@@ -32,19 +30,27 @@ let createTests case pim2 pim3 (f : PIM.Dto -> unit) =
     |> PIM.fromDto
     |> PIM.calculatePIM2
     |> PIM.calculatePIM3
+
+
+
+let createTests case pim2 pim3 (f : PIM.Dto -> unit) =
+//    Console.WriteLine($"testing {case}")
+    run f
     |> fun pim -> 
         testParam pim [
-            $"{case} PIM2", 
-            fun pim () ->
-                pim.PIM2Mortality
-                |> Option.map (fun v -> Math.Round(100. * v, 1))
-                |> Expect.equal "should equal" pim2
-            $"{case} PIM3", 
-            fun pim () ->
-                pim.PIM3Mortality
-                |> Option.map (fun v -> Math.Round(100. * v, 1))
-                |> Expect.equal "should equal" pim3
+            if pim2 |> Option.isSome then
+                $"{case} PIM2", 
+                fun (pim : Types.PIM) () ->
+                    pim.PIM2Mortality
+                    |> Option.map (fun v -> Math.Round(100. * v, 1))
+                    |> Expect.equal "should equal" pim2
 
+            if pim3 |> Option.isSome then
+                $"{case} PIM3", 
+                fun (pim: Types.PIM) () ->
+                    pim.PIM3Mortality
+                    |> Option.map (fun v -> Math.Round(100. * v, 1))
+                    |> Expect.equal "should equal" pim3
         ]
 
 
@@ -187,11 +193,57 @@ let tests =
                 dto.RiskDiagnosis <- ["Leukemia Or Lymphoma"] 
             |> createTests "very high risk" (Some 3.9) (Some 5.9)
 
+        // Case	Leukemia or lymphoma after first induction	None of the above	None of the above	100	NB	NB	NB	0	0
+        yield! 
+            fun (dto : PIM.Dto) ->  
+                dto.RiskDiagnosis <- ["Leukemia Or Lymphoma"]
+                dto.SystolicBloodPressure <- Some 100.
+            |> createTests "very high risk SBP 100" None (Some 6.5)
+
+        // Case Bone marrow transplant recipient	None of the above	None of the above	129	106	21	-7	0	0
+        yield! 
+            fun (dto : PIM.Dto) ->  
+                dto.RiskDiagnosis <- ["Bone Marrow Transplant"]
+                dto.SystolicBloodPressure <- Some 129.
+                dto.PaO2mmHg <- Some 106.
+                dto.FiO2 <- Some 0.21
+                dto.BaseExcess <- Some -7.
+            |> createTests "very high risk SBP=129 PaO2=106 FiO2=.21 BE=-7" None (Some 8.9)
+
+        yield! 
+            fun (dto : PIM.Dto) ->  
+                dto.RiskDiagnosis <- ["Bone Marrow Transplant"]
+                dto.SystolicBloodPressure <- Some 104.
+                dto.PaO2mmHg <- Some 80.
+                dto.FiO2 <- Some 0.39
+                dto.BaseExcess <- Some 6.
+                dto.Ventilated <- true
+            |> createTests "very high risk ventilated SBP=104 PaO2=80 FiO2=.39 BE=6" None (Some 22.9)
+
+        // Case surgical	Leukemia or lymphoma after first induction	None of the above	None of the above	117	68	NB	-3	0	0
+        yield! 
+            fun (dto : PIM.Dto) ->  
+                dto.Recovery <- true
+                dto.RiskDiagnosis <- ["Leukemia Or Lymphoma"]
+                dto.SystolicBloodPressure <- Some 117.
+                dto.PaO2mmHg <- Some 68.
+                dto.BaseExcess <- Some -3.
+            |> createTests "recovery, very high risk SBP=117 PaO2=68 BE=-3" None (Some 1.7)
+
+
     ]
 
 
+tests
+|> runTestsWithCLIArgs [ CLIArguments.Verbosity LogLevel.Verbose; Sequenced ] [||]
 
-tests    
-|> runTestsWithCLIArgs [ CLIArguments.Verbosity LogLevel.Verbose ] [||]
 
 
+fun (dto : PIM.Dto) ->  
+    dto.RiskDiagnosis <- ["Bone Marrow Transplant"]
+    dto.SystolicBloodPressure <- Some 104.
+    dto.PaO2mmHg <- Some 80.
+    dto.FiO2 <- Some 0.39
+    dto.BaseExcess <- Some 6.
+    dto.Ventilated <- true
+|> run
