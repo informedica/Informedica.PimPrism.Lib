@@ -37,3 +37,9 @@
 !/src/
 !/src/Informedica.PimPrism.Lib/
 !/src/Informedica.PimPrism.Lib/scripts/
+
+# Add test files
+!/tests/
+!/tests/Informedica.PimPrism.Tests/
+!/tests/Informedica.PimPrism.Tests/scripts/
+

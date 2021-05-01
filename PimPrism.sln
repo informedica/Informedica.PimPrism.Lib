@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{96883BD4-546
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Informedica.PimPrism.Lib", "src\Informedica.PimPrism.Lib\Informedica.PimPrism.Lib.fsproj", "{37EA9AA2-92B8-49EE-9248-C2C015A6CEFB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2DDC08E8-51E6-4326-AD22-9ACBE2475343}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Informedica.PimPrism.Tests", "tests\Informedica.PimPrism.Tests\Informedica.PimPrism.Tests.fsproj", "{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +36,21 @@ Global
 		{37EA9AA2-92B8-49EE-9248-C2C015A6CEFB}.Release|x64.Build.0 = Release|Any CPU
 		{37EA9AA2-92B8-49EE-9248-C2C015A6CEFB}.Release|x86.ActiveCfg = Release|Any CPU
 		{37EA9AA2-92B8-49EE-9248-C2C015A6CEFB}.Release|x86.Build.0 = Release|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Debug|x64.Build.0 = Debug|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Debug|x86.Build.0 = Debug|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Release|x64.ActiveCfg = Release|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Release|x64.Build.0 = Release|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Release|x86.ActiveCfg = Release|Any CPU
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{37EA9AA2-92B8-49EE-9248-C2C015A6CEFB} = {96883BD4-5461-4461-B173-275F5B20F87D}
+		{1F92B43F-8044-4058-B3C9-4DFDB6B307C3} = {2DDC08E8-51E6-4326-AD22-9ACBE2475343}
 	EndGlobalSection
 EndGlobal
